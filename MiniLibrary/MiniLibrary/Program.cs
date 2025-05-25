@@ -12,7 +12,10 @@ using MiniLibrary.DAL.Context;
 using MiniLibrary.DAL.Entity;
 using MiniLibrary.DAL.UnitOfWorks.Interfaces;
 using MiniLibrary.DAL.UnitOfWorks;
-using QuoteBook.DAL.Seed; 
+using QuoteBook.DAL.Seed;
+using MiniLibrary.BLL.Options;
+using MiniLibrary.DAL.Repositories;
+using MiniLibrary.DAL.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,8 +37,7 @@ builder.Services.AddSwaggerGen(options =>
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer",
         BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Description = "¬вед≥ть токен у формат≥: Bearer {your JWT token}"
+        In = ParameterLocation.Header
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -85,8 +87,13 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IUserBookRepository, UserBookRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+
+
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 
 var app = builder.Build();
 

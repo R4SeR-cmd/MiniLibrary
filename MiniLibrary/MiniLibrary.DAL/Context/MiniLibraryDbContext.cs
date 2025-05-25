@@ -6,6 +6,9 @@ namespace MiniLibrary.DAL.Context
 {
     public class MiniLibraryDbContext : IdentityDbContext<User>
     {
+        public DbSet<Book> Books { get; set; }
+        public DbSet<UserBook> UsersAndBooks { get; set; }
+
         public MiniLibraryDbContext(DbContextOptions<MiniLibraryDbContext> options) :
             base(options)
         {

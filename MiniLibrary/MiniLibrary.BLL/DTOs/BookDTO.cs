@@ -1,8 +1,8 @@
 ﻿using MiniLibrary.DAL.Enums;
 
-namespace MiniLibrary.DAL.Entity
+namespace MiniLibrary.BLL.DTOs
 {
-    public class Book
+    public class BookDto
     {
         public int Id { get; set; }
         public required string Title { get; set; }

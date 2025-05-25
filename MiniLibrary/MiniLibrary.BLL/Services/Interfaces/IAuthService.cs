@@ -4,7 +4,7 @@ namespace MiniLibrary.BLL.Services.Interfaces
 {
     public interface IAuthService
     {
-        Task<string> RegisterAsync(RegisterDto dto);
-        Task<string> LoginAsync(LoginDto dto);
+        Task<string> RegisterAsync(UserCredentialsDTO dto);
+        Task<string> LoginAsync(UserCredentialsDTO dto);
     }
 }
