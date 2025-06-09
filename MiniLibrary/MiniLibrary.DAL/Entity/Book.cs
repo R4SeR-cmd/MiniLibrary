@@ -4,7 +4,7 @@ namespace MiniLibrary.DAL.Entity
 {
     public class Book
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = Guid .NewGuid().ToString();
         public required string Title { get; set; }
         public DateOnly DateOfWriting { get; set; }
         public Genre Genre { get; set; }

@@ -4,12 +4,13 @@ namespace MiniLibrary.BLL.Services.Interfaces
 {
     public interface IBookService
     {
-        Task<BookDto> GetBookByIdAsync(int id);
+        Task<BookDto> GetBookByIdAsync(string id);
         Task<List<BookDto>> GetAllBooksAsync();
-        void DeleteBookAsync(int id);
-        Task CreateBookAsync(BookDto book);
+        Task DeleteBookAsync(string id);
+        Task<BookDto> CreateBookAsync(BookDto book);
         Task UpdateBookAsync(BookDto book);
 
         //Filtration later
+        
     }
 }

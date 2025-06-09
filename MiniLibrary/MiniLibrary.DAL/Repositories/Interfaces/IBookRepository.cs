@@ -1,13 +1,15 @@
-﻿using MiniLibrary.DAL.Entity;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using MiniLibrary.DAL.Entity;
 
 namespace MiniLibrary.DAL.Repositories.Interfaces
 {
     public interface IBookRepository
     {
-        Task<Book> GetAsync(int id);
-        List<Task<Book>> GetAllAsync();
-        void Delete(int id);
-        Task AddAsync(Book book);
-        Task UpdateAsync(Book book);
+        Task<Book> GetAsync(string id);
+        Task<List<Book>> GetAllAsync();
+        void Delete(Book book);
+        Task<EntityEntry<Book>> AddAsync(Book book);
+        void UpdateAsync(Book book);
+
     }
 }

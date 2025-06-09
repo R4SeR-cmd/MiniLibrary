@@ -12,7 +12,7 @@ namespace MiniLibrary.DAL.UnitOfWorks
         private readonly MiniLibraryDbContext _context;
         public IUserRepository Users { get; }
         public IBookRepository Books { get; }
-        public IUserBookRepository UsersBooks { get; }
+        
         
 
         public UnitOfWork(MiniLibraryDbContext context, IUserRepository userRepository)
@@ -20,7 +20,7 @@ namespace MiniLibrary.DAL.UnitOfWorks
             _context = context;
             Users = new UserRepository(_context);
             Books = new BookRepository(_context);
-            UsersBooks = new UserBookRepository(_context);
+            
         }
 
         public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();

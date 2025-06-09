@@ -1,4 +1,6 @@
-﻿using MiniLibrary.DAL.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using MiniLibrary.DAL.Context;
 using MiniLibrary.DAL.Entity;
 using MiniLibrary.DAL.Repositories.Interfaces;
 
@@ -13,29 +15,29 @@ namespace MiniLibrary.DAL.Repositories
             _context = context;
         }
 
-        public Task<Book> GetAsync(int id)
+        public async Task<Book> GetAsync(string id)
         {
-            throw new NotImplementedException();
+            return await _context.Books.FindAsync(id);
         }
 
-        public List<Task<Book>> GetAllAsync()
+        public async Task<List<Book>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Books.ToListAsync();
         }
 
-        public void Delete(int id)
+        public void Delete(Book book)
         {
-            throw new NotImplementedException();
+            _context.Books.Remove(book);
         }
 
-        public Task AddAsync(Book book)
+        public async Task<EntityEntry<Book>> AddAsync(Book book)
         {
-            throw new NotImplementedException();
+            return await _context.Books.AddAsync(book);
         }
 
-        public Task UpdateAsync(Book book)
+        public void UpdateAsync(Book book)
         {
-            throw new NotImplementedException();
+            _context.Books.Update(book);
         }
     }
 }
