@@ -9,8 +9,7 @@ namespace MiniLibrary.BLL.Services.Interfaces
         Task DeleteBookAsync(string id);
         Task<BookDto> CreateBookAsync(BookDto book);
         Task UpdateBookAsync(BookDto book);
+        Task<List<BookDto>> QueryBooksAsync(FilterBook filterBook);
 
-        //Filtration later
-        
     }
 }

@@ -35,9 +35,14 @@ namespace MiniLibrary.DAL.Repositories
             return await _context.Books.AddAsync(book);
         }
 
-        public void UpdateAsync(Book book)
+        public void Update(Book book)
         {
             _context.Books.Update(book);
+        }
+
+        public  IQueryable<Book> GetAllAsQueryable()
+        {
+            return _context.Books.AsQueryable();
         }
     }
 }

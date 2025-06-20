@@ -6,7 +6,7 @@ namespace MiniLibrary.BLL.DTOs
     {
         public string Id { get; set; }
         public required string Title { get; set; }
-        public DateOnly DateOfWriting { get; set; }
+        public DateTime DateOfWriting { get; set; }
         public Genre Genre { get; set; }
         public string Author { get; set; }
     }

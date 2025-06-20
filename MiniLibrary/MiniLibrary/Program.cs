@@ -16,6 +16,7 @@ using QuoteBook.DAL.Seed;
 using MiniLibrary.BLL.Options;
 using MiniLibrary.DAL.Repositories;
 using MiniLibrary.DAL.Repositories.Interfaces;
+using MiniLibrary.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -90,6 +91,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
@@ -111,7 +113,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseMiddleware<CustomJwtMiddleware>();
 app.UseAuthentication(); 
 app.UseAuthorization();
 

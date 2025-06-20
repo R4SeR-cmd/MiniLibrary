@@ -1,4 +1,5 @@
-﻿using MiniLibrary.BLL.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using MiniLibrary.BLL.DTOs;
 using MiniLibrary.BLL.Extensions;
 using MiniLibrary.BLL.Services.Interfaces;
 using MiniLibrary.DAL.UnitOfWorks.Interfaces;
@@ -49,8 +50,31 @@ namespace MiniLibrary.BLL.Services
         }
 
         public async Task UpdateBookAsync(BookDto book)
+        {   
+            _unitOfWork.Books.Update(book.ToEntity());
+            await _unitOfWork.SaveChangesAsync();
+
+        }
+
+        public async Task<List<BookDto>> QueryBooksAsync(FilterBook filterBook)
         {
-            _unitOfWork.Books.UpdateAsync(book.ToEntity());
+            
+           var books =  _unitOfWork.Books.GetAllAsQueryable();
+           
+           if (filterBook.Author != null)
+              books = books.Where(x => x.Author.Equals(filterBook.Author));
+
+           if (filterBook.Title != null)
+               books = books.Where(x => x.Title.Equals(filterBook.Title));
+
+           if (filterBook.DateOfWriting != null)
+               books = books.Where(x => x.DateOfWriting.Equals(filterBook.DateOfWriting));
+
+           if (filterBook.Genre != null)
+               books = books.Where(x => x.Genre.Equals(filterBook.Genre));
+
+
+           return await books.Select(x => x.ToDto()).ToListAsync();
 
         }
     }

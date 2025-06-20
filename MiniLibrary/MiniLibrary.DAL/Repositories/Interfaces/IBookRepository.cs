@@ -9,7 +9,8 @@ namespace MiniLibrary.DAL.Repositories.Interfaces
         Task<List<Book>> GetAllAsync();
         void Delete(Book book);
         Task<EntityEntry<Book>> AddAsync(Book book);
-        void UpdateAsync(Book book);
-
+        void Update(Book book);
+        IQueryable <Book> GetAllAsQueryable();
+        
     }
 }

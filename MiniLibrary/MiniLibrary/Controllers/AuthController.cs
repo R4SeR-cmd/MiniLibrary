@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MiniLibrary.BLL.DTOs;
 using MiniLibrary.BLL.Services.Interfaces;
 
@@ -30,11 +29,5 @@ namespace MiniLibrary.Controllers
             return Ok(new { token });
         }
 
-        [HttpGet("test")]
-        [Authorize]
-        public IActionResult Test()
-        {
-            return Ok("Was here");
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MiniLibrary.BLL.DTOs;
 using MiniLibrary.BLL.Services.Interfaces;
 
@@ -6,6 +7,7 @@ namespace MiniLibrary.Controllers
 {
     [ApiController]
     [Route("api/books")]
+    [Authorize]
     public class BookController : ControllerBase
     {
         private readonly IBookService _bookService;
@@ -36,10 +38,21 @@ namespace MiniLibrary.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBookAsync([FromBody] BookDto bookDto)
+        public async Task<IActionResult> AddBookAsync([FromBody] CreateBookDTO createBook)
         {
-            if(bookDto == null)
+            if(createBook == null)
                 return BadRequest();
+
+            var bookDto = new BookDto
+            {
+                Id = Guid.NewGuid().ToString(),
+                DateOfWriting = createBook.DateOfWriting,
+                Author = createBook.Author,
+                Genre = createBook.Genre,
+                Title = createBook.Title
+
+            };
+            
             await _bookService.CreateBookAsync(bookDto);
             return Ok();
         }
@@ -55,6 +68,24 @@ namespace MiniLibrary.Controllers
             return Ok();
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateBook([FromBody] BookDto bookDto)
+        {
+            if (bookDto == null)
+                return BadRequest();
+
+
+            await _bookService.UpdateBookAsync(bookDto);
+            return Ok();
+        }
+
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> QueryBooks([FromQuery] FilterBook filterBook)
+        {
+            var books = await _bookService.QueryBooksAsync(filterBook);
+            return Ok(books);
+        }
 
 
     }
