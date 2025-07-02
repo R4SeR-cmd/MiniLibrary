@@ -56,26 +56,14 @@ namespace MiniLibrary.BLL.Services
 
         }
 
-        public async Task<List<BookDto>> QueryBooksAsync(FilterBook filterBook)
+        public async Task<List<BookDto>> QueryBooksAsync(FilterBook filter)
         {
-            
-           var books =  _unitOfWork.Books.GetAllAsQueryable();
-           
-           if (filterBook.Author != null)
-              books = books.Where(x => x.Author.Equals(filterBook.Author));
+            var query = _unitOfWork.Books.GetAllAsQueryable()
+                .ApplyFilter(filter)
+                .ApplyPages(filter.Page,filter.PageSize)
+                .Select(x => x.ToDto());
 
-           if (filterBook.Title != null)
-               books = books.Where(x => x.Title.Equals(filterBook.Title));
-
-           if (filterBook.DateOfWriting != null)
-               books = books.Where(x => x.DateOfWriting.Equals(filterBook.DateOfWriting));
-
-           if (filterBook.Genre != null)
-               books = books.Where(x => x.Genre.Equals(filterBook.Genre));
-
-
-           return await books.Select(x => x.ToDto()).ToListAsync();
-
+            return await query.ToListAsync();
         }
     }
 }
