@@ -7,7 +7,7 @@ namespace QuoteBook.DAL.Seed
     {
         public static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
         {
-            string[] roleNames = { "Admin", "Customer" };
+            string[] roleNames = { "Admin", "Customer", "Author" };
 
             foreach (var role in roleNames)
             {

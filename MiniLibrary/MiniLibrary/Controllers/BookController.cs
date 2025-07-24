@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MiniLibrary.BLL.DTOs;
 using MiniLibrary.BLL.Services.Interfaces;
+using System.Security.Claims;
 
 namespace MiniLibrary.Controllers
 {
@@ -37,25 +38,7 @@ namespace MiniLibrary.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddBookAsync([FromBody] CreateBookDTO createBook)
-        {
-            if(createBook == null)
-                return BadRequest();
-
-            var bookDto = new BookDto
-            {
-                Id = Guid.NewGuid().ToString(),
-                DateOfWriting = createBook.DateOfWriting,
-                Author = createBook.Author,
-                Genre = createBook.Genre,
-                Title = createBook.Title
-
-            };
-            
-            await _bookService.CreateBookAsync(bookDto);
-            return Ok();
-        }
+        
 
         [HttpDelete]
         public async Task<IActionResult> RemoveBook([FromRoute] string id)
@@ -85,6 +68,31 @@ namespace MiniLibrary.Controllers
         {
             var books = await _bookService.QueryBooksAsync(filterBook);
             return Ok(books);
+        }
+
+        [Authorize(Roles = "Author")]
+        [HttpPost]
+        public async Task<IActionResult> AddBookAsync([FromBody] CreateBookDTO createBook)
+        {
+            if (createBook == null)
+                return BadRequest();
+
+            var authorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (authorId == null)
+                return NotFound();
+
+            var bookDto = new BookDto
+            {
+                Id = Guid.NewGuid().ToString(),
+                DateOfWriting = createBook.DateOfWriting,
+                Genre = createBook.Genre,
+                Title = createBook.Title,
+                AuthorId = authorId
+            };
+
+            await _bookService.CreateBookAsync(bookDto);
+            return Ok();
         }
 
 

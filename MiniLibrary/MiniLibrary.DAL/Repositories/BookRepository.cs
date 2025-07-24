@@ -15,34 +15,16 @@ namespace MiniLibrary.DAL.Repositories
             _context = context;
         }
 
-        public async Task<Book> GetAsync(string id)
-        {
-            return await _context.Books.FindAsync(id);
-        }
+        public async Task<Book> GetAsync(string id) => await _context.Books.FindAsync(id);
 
-        public async Task<List<Book>> GetAllAsync()
-        {
-            return await _context.Books.ToListAsync();
-        }
+        public async Task<List<Book>> GetAllAsync() => await _context.Books.ToListAsync();
 
-        public void Delete(Book book)
-        {
-            _context.Books.Remove(book);
-        }
+        public void Delete(Book book) => _context.Books.Remove(book);
 
-        public async Task<EntityEntry<Book>> AddAsync(Book book)
-        {
-            return await _context.Books.AddAsync(book);
-        }
+        public async Task<EntityEntry<Book>> AddAsync(Book book) => await _context.Books.AddAsync(book);
 
-        public void Update(Book book)
-        {
-            _context.Books.Update(book);
-        }
+        public void Update(Book book) => _context.Books.Update(book);
 
-        public  IQueryable<Book> GetAllAsQueryable()
-        {
-            return _context.Books.AsQueryable();
-        }
+        public  IQueryable<Book> GetAllAsQueryable() => _context.Books.AsQueryable();
     }
 }
